@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "openai-python-mocks"
+version = "0.1.0"
+description = ""
+authors = ["Daria Neznaeva <darianeznaeva@gmail.com>"]
+readme = "README.md"
+packages = [{include = "openai_python_mocks"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+responses = "^0.23.1"
+decorator = "^5.1.1"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.0"
+black = "^23.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
