@@ -1,3 +1,7 @@
+import json
+import random
+import string
+
 import responses
 from decorator import decorator
 
@@ -13,12 +17,12 @@ def mock_openai(func, *args, **kwargs):
 
     Returns:
         The result of calling the `func` function with the provided arguments."""
-    responses.add(
-        responses.POST,
-        "https://api.openai.com/v1/chat/completions",
-        json={
-            # TODO: generate random string
-            "id": "chatcmpl-6p9XYPYSTTRi0xEviKjjilqrWU2Ve",
+
+    def request_callback(request):
+        letters = string.ascii_letters + string.digits
+        random_string = "".join(random.choice(letters) for i in range(29))
+        response_body = {
+            "id": "chatcmpl-" + random_string,
             "object": "chat.completion",
             # TODO: get from current time
             "created": 1677649420,
@@ -35,7 +39,13 @@ def mock_openai(func, *args, **kwargs):
                     "index": 0,
                 }
             ],
-        },
+        }
+        return (200, {}, json.dumps(response_body))
+
+    responses.add_callback(
+        responses.POST,
+        "https://api.openai.com/v1/chat/completions",
+        callback=request_callback,
         content_type="application/json",
     )
     return func(*args, **kwargs)
