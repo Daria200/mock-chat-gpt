@@ -1,7 +1,7 @@
 import json
 import random
 import string
-from datetime import datetime
+import time
 
 import responses
 from decorator import decorator
@@ -22,12 +22,11 @@ def mock_openai(func, *args, **kwargs):
     def request_callback(request):
         letters = string.ascii_letters + string.digits
         random_string = "".join(random.choice(letters) for i in range(29))
-        current_time = datetime.now().strftime("%H:%M:%S")
+        current_epoch_time = int(time.time())
         response_body = {
             "id": "chatcmpl-" + random_string,
             "object": "chat.completion",
-            # TODO: get from current time
-            "created": current_time,
+            "created": current_epoch_time,
             "model": "gpt-3.5-turbo",
             # TODO: track usage
             "usage": {"prompt_tokens": 56, "completion_tokens": 31, "total_tokens": 87},

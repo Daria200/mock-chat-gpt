@@ -20,3 +20,5 @@ def test_chat_gpt():
         response["choices"][0]["message"]["content"]
         == "I am just a computer. Unfortunantely I cannot help you with this issue"
     )
+    assert type(response["created"]) == int
+    assert len(str(response["created"])) == 10
