@@ -23,13 +23,20 @@ def mock_openai(func, *args, **kwargs):
         letters = string.ascii_letters + string.digits
         random_string = "".join(random.choice(letters) for i in range(29))
         current_epoch_time = int(time.time())
+        prompt_tokens = 56
+        completion_tokens = 31
+        total_tokens = prompt_tokens + completion_tokens
         response_body = {
             "id": "chatcmpl-" + random_string,
             "object": "chat.completion",
             "created": current_epoch_time,
             "model": "gpt-3.5-turbo",
             # TODO: track usage
-            "usage": {"prompt_tokens": 56, "completion_tokens": 31, "total_tokens": 87},
+            "usage": {
+                "prompt_tokens": prompt_tokens,
+                "completion_tokens": completion_tokens,
+                "total_tokens": total_tokens,
+            },
             "choices": [
                 {
                     "message": {
