@@ -1,0 +1,32 @@
+name: publish
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.8
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.1.6
+        with:
+          poetry-version: 1.2.0
+      - name: Install dependencies
+        run: |
+          poetry install
+      - name: Pytest
+        run: |
+          poetry run pytest
+      - name: Publish
+        env:
+          PYPI_USER: Daria200
+          PYPI_PASS: ${{ secrets.PYPI_PASS }}
+        run: |
+          poetry publish --build --username $PYPI_USER --password $PYPI_PASS
