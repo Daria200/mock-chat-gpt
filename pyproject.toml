@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "openai-python-mocks"
-version = "0.1.0"
+version = "0.0.1"
 description = ""
 authors = ["Daria Neznaeva <darianeznaeva@gmail.com>"]
 readme = "README.md"
